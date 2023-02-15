@@ -1,0 +1,43 @@
+---
+title: "Proposal"
+author: "Kaitlyn Billington"
+date: "2023-02-15"
+output: html_document
+---
+
+# Data and Audience
+
+Depending on the specifics of your project, you should outline the answers to these (and perhaps other) questions: What is the dataset you'll be working with? Please include background on who collected the data, where you accessed it, and any additional information we should know about how this data came to be.
+
+-   Our dataset is on City of Seattle Staff Demographics. The data was created February 25, 2019 and is provided by the Seattle Department of Human Resources. It is updated on a monthly basis, with its most recent update being January 31, 2023.
+
+Who is your target audience? Depending on the domain of your data, there may be a variety of audiences interested in using the dataset. You should home in on one of these audiences.
+
+-   Since the data is provided by the Seattle Department of Human Resources, this Department is the target audience. Likely, they gathered the data for their own use to analyze staff demographics.
+
+What does your audience want to learn from your data? Please list out at least 3 specific questions that your project will answer for your audience.
+
+-   What is the relationship between an employee's department and gender?
+-   What is the current employee status? How many people are actively working?
+-   What is the relationship between race and an employee's department? Is there a relationship between race and whether they are a regular or temporary worker?
+-   Does wage have a relationship to department, gender, or race?
+
+# Technical Description
+
+This section of your proposal asks you to think through the specific analytical steps you'll need to complete throughout the project. How will you be reading in your data (i.e., are you using an API, or is it a static .csv/.json file)? - Our data is a csv file
+
+What types of data-wrangling (reshaping, reformatting, etc.) will you need to do to your data?
+
+-   Changing hourly wage from being considered as text (string) to numbers (int/double)
+
+What (major/new) libraries will be using in this project (no need to list common libraries that are used in many projects such as dplyr)
+
+-   None (we think)
+
+What questions, if any, will you be answering with statistical analysis/machine learning?
+
+-   Relationships between two variables (ex: race and department of work)
+
+What major challenges do you anticipate?
+
+-   Figuring out how to change the type of hourly wage from String to int/double.
