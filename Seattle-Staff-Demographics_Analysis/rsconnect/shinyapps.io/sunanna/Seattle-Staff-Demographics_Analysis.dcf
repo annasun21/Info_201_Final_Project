@@ -1,0 +1,13 @@
+name: Seattle-Staff-Demographics_Analysis
+title: Seattle-Staff-Demographics_Analysis
+username:
+account: sunanna
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8521186
+bundleId: 6935133
+url: https://sunanna.shinyapps.io/Seattle-Staff-Demographics_Analysis/
+when: 1678346619.23467
+lastSyncTime: 1678346619.23469
+asMultiple: FALSE
+asStatic: FALSE

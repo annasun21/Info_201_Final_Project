@@ -7,7 +7,7 @@ library(shiny)
 library(tidyverse)
 
 #load dataset and update column type
-staff <- read_delim("../City_of_Seattle_Staff_Demographics.csv")
+staff <- read_delim("City_of_Seattle_Staff_Demographics.csv")
 transform(staff, "Hourly Rate" = as.numeric("Hourly Rate"))
 
 
@@ -32,20 +32,18 @@ ui <- fluidPage(
                     nrow(data), 
                     " observations and ",
                     ncol(data),
-                    " variables."
-                 ),
+                    " variables."),
                  
                  h4("An analysis of this data will be most helpful for Seattle HR employees. 
-                 By analyzing employees in various departments by gender, race, and age,  hiring
-                 practices can be improved for fostering diversity and inclusion, an important 
-                 aspect of hiring that companies should strive for. Here are some questions that
-                 will help guide our analysis: 
+                    By analyzing employees in various departments by gender, race, and age,  hiring
+                    practices can be improved for fostering diversity and inclusion, an important 
+                    aspect of hiring that companies should strive for. Here are some questions that
+                    will help guide our analysis: 
                         
-                        “What is the percentage of White vs. Non-white employees per City of Seattle department?”
-                      “How many male vs. female employees make up each City of Seattle department?
-                        “How do the wages of City of Seattle employees compare by race?”"
-                    
-                 )
+                    “What is the percentage of White vs. Non-white employees per City of Seattle department?”
+                    “How many male vs. female employees make up each City of Seattle department?
+                    “How do the wages of City of Seattle employees compare by race?”"
+                    )
                ),
                mainPanel(
                  imageOutput("overview_image")
@@ -142,7 +140,7 @@ server <- function(input, output) {
   #Overview page
   #image used for overview page
   output$overview_image <- renderImage({
-    list(src = "../worker-image.jpeg",
+    list(src = "worker-image.jpeg",
          width = "100%")
   }, deleteFile = FALSE)
   

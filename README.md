@@ -8,4 +8,4 @@ What is the percentage of White vs. Non-white employees per City of Seattle depa
 How many male vs. female employees make up each City of Seattle department?
 How do the wages of City of Seattle employees compare by race?
 
-Link to our shiny app: 
+Link to our shiny app: https://sunanna.shinyapps.io/Seattle-Staff-Demographics_Analysis/
