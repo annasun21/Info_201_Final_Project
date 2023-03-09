@@ -9,7 +9,7 @@ ui <- fluidPage(
   # Application title
   titlePanel("Seattle Staff Demographics"),
   
-  # Red UI
+  # Overview UI
   tabsetPanel(
     tabPanel("Overview", 
              sidebarLayout(
@@ -44,7 +44,7 @@ ui <- fluidPage(
                )
              )
     ),
-    # Orange UI
+    # Dep & Race UI
     tabPanel("Department & Race",
              sidebarLayout(
                sidebarPanel(
@@ -57,7 +57,7 @@ ui <- fluidPage(
              )
     ),
 
-# Green UI
+# Dep & Sex UI
     tabPanel("Department & Sex", 
          sidebarLayout(
            sidebarPanel(
@@ -76,7 +76,7 @@ ui <- fluidPage(
            )
          )
     ), 
-# Pink-ish UI
+# Wage & Race UI
     tabPanel("Wage & Race",
          sidebarLayout(
            sidebarPanel(
@@ -102,7 +102,7 @@ ui <- fluidPage(
            )
          )
     ),
-# Blue UI
+# Conclusion UI
 tabPanel("Conclusion", 
          sidebarLayout(
            sidebarPanel(
@@ -162,8 +162,10 @@ output$tableRace <- renderTable({
 
 output$entriesTableRace <- renderText({
   paste("This table displays the percentage of white vs. non-white employees 
-          per City of Seattle Department. Presenting data for", 
-        length(staffCleanTable()$Department), "employees.")
+          per City of Seattle Department. It presents data for", 
+        length(staffCleanTable()$Department), "employees at the top ten most employed departments. 
+        The checkbox allows you to view specific data of interest, allowing for a better, more clear
+        comparison between departments.")
 })  
 
 # Green Server
@@ -181,7 +183,10 @@ output$plotObservation <- renderPrint({
     filter(Department %in% input$plotDepartments) %>%
     nrow()
   cat("This graph provides a visual depiction of the male to female ratio of Seattle employees.
-  The plot uses ", num, " observations to create this depiction.")
+  It presents up-to-date information regarding the sex makeup of each City of Seattle department,
+  and can be viewed in stacked or dodged form to be more easily interpreted. The plot uses ",
+      num, " observations to create this depiction, and can be filtered with the checkboxes to
+      show a different number of departments.")
 })
 
 # Pink-ish Server
@@ -205,7 +210,10 @@ output$plotNumbers <- renderPrint({
     filter(`Race/Ethnicity`%in% input$`Race/Ethnicity`) %>% 
     nrow()
   cat("The selected subset contains ", rows, "observations which compare the wages of Seattle 
-  employees based on their self-identified Race/Ethnicity.")
+  employees based on their self-identified Race/Ethnicity.It plots the various hourly rates of 
+  individuals and organizes them by their racial identity. With this plot, one can view any race
+  based inequalities that can be assessed and later addressed to ensure inclusivity within the 
+  workplace.")
   
 })
 
