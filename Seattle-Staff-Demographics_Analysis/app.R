@@ -48,7 +48,7 @@ ui <- fluidPage(
                  )
                ),
                mainPanel(
-                 imageOutput("image")
+                 imageOutput("overview_image")
                )
              )
     ),
@@ -58,12 +58,12 @@ ui <- fluidPage(
              sidebarLayout(
                #widget allows user to choose what Departments they want to look at
                sidebarPanel(
-                 uiOutput("checkboxDepTable")
+                 uiOutput("Dep_and_Race_ui")
                ),
                #displays the table and a description of what the table is showing
                mainPanel(
-                 tableOutput("tableRace"),
-                 textOutput("entriesTableRace")
+                 tableOutput("Dep_and_Race_table"),
+                 textOutput("Dep_and_Race_description")
                )
              )
     ),
@@ -77,15 +77,15 @@ ui <- fluidPage(
                           "What position would you like to see the data presented in: ",
                           choices = c("stack", "dodge"),
                           selected = "stack"),
-             checkboxGroupInput("plotDepartments",
+             checkboxGroupInput("Dep_and_Sex_departments",
                                 "What departments would you like to see: ",
                                 choices = unique(staff$Department),
                                 selected = unique(staff$Department))
            ),
            #displays a bar chart and includes a description of what is being shown
            mainPanel(
-             plotOutput("distPlot"),
-             textOutput("plotObservation")
+             plotOutput("Dep_and_Sex_plot"),
+             textOutput("Dep_and_Sex_description")
            )
          )
     ), 
@@ -100,16 +100,16 @@ ui <- fluidPage(
                                 selected = unique(staff$`Race/Ethnicity`)),
              radioButtons("rb", label = "Choose point color",
                           choices = c("red",
-                                           "blue",
-                                           "green",
-                                           "purple"),
-                                           selected = "blue")
+                                      "blue",
+                                      "green",
+                                      "purple"),
+                          selected = "blue")
              
            ),
            #displays a point graph and a description of the graph
            mainPanel(
-             plotOutput('distPlotRace'), 
-             textOutput("plotNumbers")
+             plotOutput("Wage_and_Race_plot"), 
+             textOutput("Wage_and_Race_description")
            )
          )
     ),
@@ -141,7 +141,7 @@ server <- function(input, output) {
 
   #Overview page
   #image used for overview page
-  output$image <- renderImage({
+  output$overview_image <- renderImage({
     list(src = "../worker-image.jpeg",
          width = "100%")
   }, deleteFile = FALSE)
@@ -153,22 +153,22 @@ server <- function(input, output) {
     staff %>%
       group_by(Department) %>%
       filter(n() > 700) %>% 
-      filter(`Department` %in% input$departmentTable)
+      filter(`Department` %in% input$Dep_and_Race_departments)
   })
   
   #widget that allows user to choose departments
-  output$checkboxDepTable <- renderUI({
+  output$Dep_and_Race_ui <- renderUI({
     staff_over_700 <- staff %>% 
-      group_by(Department) %>%
-      filter(n() > 700) 
-    checkboxGroupInput("departmentTable",
+    group_by(Department) %>%
+    filter(n() > 700) 
+    checkboxGroupInput("Dep_and_Race_departments",
                        "Department: ",
                        choices = unique(staff_over_700$`Department`),
                        selected = unique(staff_over_700$`Department`))
   })
   
   #table that shows percentage of white to non-whites
-  output$tableRace <- renderTable({
+  output$Dep_and_Race_table <- renderTable({
     staffCleanTable() %>% 
       summarize(`Percentage of White Employees`=mean(`Race/Ethnicity` == "White")*100, 
                 `Percentage of Non-white Employees`=mean(`Race/Ethnicity` != "White")*100) %>% 
@@ -177,10 +177,10 @@ server <- function(input, output) {
   })
   
   #overview of what this table is used for
-  output$entriesTableRace <- renderText({
+  output$Dep_and_Race_description <- renderText({
     paste("This table displays the percentage of white vs. non-white employees 
             per City of Seattle Department. It presents data for", 
-          length(staffCleanTable()$Department), "employees at the top ten most employed departments. 
+          length(staffCleanTable()$Department), "employees at the top six most employed departments. 
           The checkbox allows you to view specific data of interest, allowing for a better, more clear
           comparison between departments.")
   })  
@@ -188,9 +188,9 @@ server <- function(input, output) {
   
   # Dep & Sex page
   #bar chart of department and their gender make-up
-  output$distPlot <- renderPlot({
+  output$Dep_and_Sex_plot <- renderPlot({
     staff %>% 
-      filter(Department %in% input$plotDepartments) %>%
+      filter(Department %in% input$Dep_and_Sex_departments) %>%
       ggplot(aes(Department, fill=Sex)) +
       geom_bar(position=input$position) + 
       theme(axis.text.x = element_text(angle = 90)) +
@@ -198,9 +198,9 @@ server <- function(input, output) {
   })
   
   #overview and info on our chart
-  output$plotObservation <- renderPrint({
+  output$Dep_and_Sex_description <- renderPrint({
     num <- staff %>% 
-      filter(Department %in% input$plotDepartments) %>%
+      filter(Department %in% input$Dep_and_Sex_departments) %>%
       nrow()
     cat("This graph provides a visual depiction of the male to female ratio of Seattle employees.
     It presents up-to-date information regarding the sex makeup of each City of Seattle department,
@@ -212,7 +212,7 @@ server <- function(input, output) {
   
   # Wage & Race page
   #plot of hourly wage for each race
-  output$distPlotRace <- renderPlot({
+  output$Wage_and_Race_plot <- renderPlot({
     staff %>% 
       filter(`Race/Ethnicity`%in% input$`Race/Ethnicity`) %>% 
       ggplot(aes(`Race/Ethnicity`, `Hourly Rate`)) +
@@ -227,7 +227,7 @@ server <- function(input, output) {
   })
   
   #description of plot
-  output$plotNumbers <- renderPrint({
+  output$Wage_and_Race_description <- renderPrint({
     rows <- staff %>% 
       filter(`Race/Ethnicity`%in% input$`Race/Ethnicity`) %>% 
       nrow()
